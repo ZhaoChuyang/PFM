@@ -1,0 +1,19 @@
+# Core deep learning framework (CUDA 12.8 build)
+torch==2.8.0
+torchvision==0.23.0
+transformers==4.57.0
+diffusers==0.38.0.dev0
+peft
+accelerate
+safetensors
+tokenizers
+sentencepiece
+huggingface_hub
+lpips
+timm
+numpy
+pandas
+Pillow
+tqdm
+loguru
+wandb

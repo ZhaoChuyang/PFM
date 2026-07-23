@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.so
+outputs/
+wandb/
+*.ckpt
+*.safetensors
+.DS_Store

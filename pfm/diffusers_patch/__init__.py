@@ -1,0 +1,1 @@
+from pfm.diffusers_patch.pipeline_sd3 import patch_pipeline_sd3
