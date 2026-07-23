@@ -19,6 +19,7 @@
 <p>
   <a href="https://arxiv.org/abs/2607.03524v1"><img src="https://img.shields.io/badge/arXiv-2607.03524-b31b1b.svg"></a>&nbsp;
   <a href="https://huggingface.co/papers/2607.03524"><img src="https://img.shields.io/badge/🤗-Paper%20In%20HF-red.svg" alt="Hugging Face"></a>&nbsp;
+  <a href="https://huggingface.co/chuyangzhao/PerceptualFlowMatching"><img src="https://img.shields.io/badge/🤗-Model%20Checkpoint-yellow.svg"></a>&nbsp;
   <a href="https://github.com/ZhaoChuyang/PFM"><img src="https://img.shields.io/badge/GitHub-Code-black?logo=github"></a>
 </p>
 
