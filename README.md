@@ -73,13 +73,27 @@ torchrun --nproc_per_node=8 pfm/eval_sd3.py \
 
 ## Acknowledgements
 
-Based on [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo-1.5), [JoyAI-Image](https://github.com/jd-opensource/JoyAI-Image), [FastVideo](https://github.com/hao-ai-lab/fastvideo)
+This project is built upon [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo-1.5), [JoyAI-Image](https://github.com/jd-opensource/JoyAI-Image), and [FastVideo](https://github.com/hao-ai-lab/fastvideo). We thank the authors for their great work.
 
 ## Contact
 
 For any questions, please contact [Chuyang Zhao](mailto:chuyang.zhao@outlook.com)(chuyang.zhao@outlook.com).
 
 We are hiring interns at [JoyAI Research](https://research.joyai.com/). If you are interested, please send your resume to [zhaochuyang.3@jd.com](mailto:zhaochuyang.3@jd.com).
+
+## Citation
+
+```bibtex
+@misc{zhao2026perceptualflowmatchingfewstep,
+      title={Perceptual Flow Matching for Few-Step Generative Modeling}, 
+      author={Chuyang Zhao and Yifei Song and Hongfa Wang and Jianlong Yuan and Yuan Zhang and Siming Fu and Zhineng Chen and Huilin Deng and Haoyang Huang and Nan Duan},
+      year={2026},
+      eprint={2607.03524},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2607.03524}, 
+}
+```
 
 ## License
 
