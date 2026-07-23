@@ -82,7 +82,6 @@ class SD3TrainingConfig:
     perceptual_weights: list[float] = field(default_factory=lambda: [1.0, 1.0])
     cfg_baking_scale: float = 1.0
     cfg_baking_prob: float = 1.0
-    mse_loss_weight: float = 0.0
 
     # logging / checkpointing
     output_dir: str = "outputs"
@@ -400,13 +399,6 @@ class SD3Trainer:
             flow_pred = beta * flow_cond + (1.0 - beta) * flow_uncond.detach()
             x0_pred = convert_flow_pred_to_x0(flow_pred, noisy_latents, sigmas_reshape)
 
-        # MSE loss on velocity prediction (flow matching regression)
-        velocity_target = noise - latents
-        if guidance_scale == 1.0:
-            velocity_pred = flow_cond
-        else:
-            velocity_pred = flow_pred
-
         x0_pred = x0_pred.to(torch.bfloat16)
         target = latents
 
@@ -426,24 +418,7 @@ class SD3Trainer:
             loss = loss + weighted_loss
             loss_details[pmodel.net] = weighted_loss.detach()
 
-        if cfg.mse_loss_weight > 0.0:
-            mse_loss = F.mse_loss(velocity_pred.float(), velocity_target.float())
-            weighted_mse = cfg.mse_loss_weight * mse_loss
-            loss = loss + weighted_mse
-            loss_details["mse"] = weighted_mse.detach()
-
-        # Normalize by adaptive weight factor (NFT-style) to remove timestep-dependent magnitude
-        # with torch.no_grad():
-        #     weight_factor = torch.abs(x0_pred.float() - target.float()).mean().clamp(min=1e-5)
-        # loss = loss / weight_factor
-        # # Normalize by sigma to counteract the v→x0 conversion coefficient
-        # loss = loss / sigmas.mean().clamp(min=0.01)
-        # with torch.no_grad():
-        #     weight_factor = torch.abs(x0_pred.float() - target.float() - target.float()).mean().clamp(min=1e-5)
-        # loss = loss / weight_factor
-
         loss_details["timestep"] = timesteps.mean().detach()
-        # loss_details["weight_factor"] = weight_factor.detach()
 
         return loss, loss_details
 
@@ -695,7 +670,6 @@ def parse_args():
     parser.add_argument("--perceptual_weights", type=str, default="1.0,1.0")
     parser.add_argument("--cfg_baking_scale", type=float, default=1.5)
     parser.add_argument("--cfg_baking_prob", type=float, default=1.0)
-    parser.add_argument("--mse_loss_weight", type=float, default=0.0)
     parser.add_argument("--hsdp_shard_dim", type=int, default=8)
     parser.add_argument("--enable_gradient_checkpointing", action="store_true", default=True)
 
@@ -751,7 +725,6 @@ def main():
         perceptual_weights=[float(w) for w in args.perceptual_weights.split(",")],
         cfg_baking_scale=args.cfg_baking_scale,
         cfg_baking_prob=args.cfg_baking_prob,
-        mse_loss_weight=args.mse_loss_weight,
         hsdp_shard_dim=args.hsdp_shard_dim,
         enable_gradient_checkpointing=args.enable_gradient_checkpointing,
         output_dir=args.output_dir,
